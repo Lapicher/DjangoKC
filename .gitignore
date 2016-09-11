@@ -1,2 +1,13 @@
+# Pycharm stuff
 .idea/
+
+# Virtual envioroments
 env/
+
+# Databases files
+db.sqlite3
+
+
+# Python bytecode files
+*.pyc
+
