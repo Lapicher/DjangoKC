@@ -18,6 +18,6 @@ class Photo(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):   # mifoto.__str__()
+    def __str__(self):  # mifoto.__str__() para que en el admin no se vea como objeto Photo y mejor el nombre de la foto
         return self.name
 
