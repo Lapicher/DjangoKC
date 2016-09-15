@@ -34,7 +34,7 @@ def photo_detail(request, pk):
     :return:
     """
 
-    possible_photos = Photo.objects.filter(pk=pk)
+    possible_photos = Photo.objects.filter(pk=pk).select_related("owner") #inner join para evitar hacer muchas peticiones
     if len(possible_photos) == 0:
             return HttpResponseNotFound("La imagen que buscas no existe")
     elif len(possible_photos) > 1:

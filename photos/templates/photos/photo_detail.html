@@ -9,6 +9,10 @@
             {{ photo.name }}
     </h1>
     <img src="{{ photo.url }}" alt="{{ photo.description }}" title="{{ photo.name }}" width="300">
+    <p>
+        <strong>Autor:</strong>
+        {{ photo.owner.first_name }} {{photo.owner.last_name}}
+    </p>
     <p>{{ photo.description }}</p>
 </body>
 </html>

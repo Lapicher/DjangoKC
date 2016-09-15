@@ -123,7 +123,7 @@ STATIC_URL = '/static/'
 
 # NATALY, LA AGREGUE PARA MOSTRAR EN LA CONSOLA LAS CONSULTAS SQL EN CONSOLA.
 
-"""
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -140,4 +140,3 @@ LOGGING = {
         },
     }
 }
-"""
