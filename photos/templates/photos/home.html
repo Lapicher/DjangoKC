@@ -5,13 +5,16 @@
     <title>Bienvenido a Frikr- Como fliker pero en Friki</title>
 </head>
 <body>
+    {% include "photos/includes/menu.html" %}
     <h1>Bienvenido a Frikr</h1>
 
     <p>Como clifif</p>
 
     {% if photo_list|length > 0 %}
     {% for photo in photo_list %}
-        <img src="{{ photo.url }}"  alt="{{ photo.name }}" title="{{ photo.name }}" height="300">
+        <a href="/photos/{{photo.pk}}">
+            <img src="{{ photo.url }}"  alt="{{ photo.name }}" title="{{ photo.name }}" height="300">
+        </a>
         <p>
             <strong>Autor:</strong>
             {{ photo.owner.first_name }} {{photo.owner.last_name}}
