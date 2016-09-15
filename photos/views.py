@@ -22,7 +22,7 @@ def home(request):
     # order_bay para obtener los resultados de la query en orden del campo creado, y el guion es desendente.
     # photos = Photo.objects.all().order_by('-created_at') me trae todas las fotos de la base de datos. como un select *
 
-    photos = Photo.objects.filter(visibility=VISIBILITY_PUBLIC).order_by('-created_at')
+    photos = Photo.objects.filter(visibility=VISIBILITY_PUBLIC).order_by('-created_at').select_related("owner")
     context = {'photo_list': photos[:4]}
     return render(request, 'photos/home.html', context)
 
