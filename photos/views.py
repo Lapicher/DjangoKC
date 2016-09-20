@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from photos.forms import PhotoForm
 from photos.models import Photo, VISIBILITY_PUBLIC
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -48,6 +49,7 @@ def photo_detail(request, pk):
     return render(request, 'photos/photo_detail.html', context)
 
 
+@login_required()
 def photo_creation(request):
     """
     Presenta el formulario para crear una foto y en caso de que la peticion sea post, la valida y la crea en caso de que
@@ -55,8 +57,6 @@ def photo_creation(request):
     :param request:
     :return:
     """
-
-
 
     message = ""
 

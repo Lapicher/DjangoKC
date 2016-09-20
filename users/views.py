@@ -27,7 +27,7 @@ def login(request):
             else:
                 if user.is_active:
                     django_login(request, user)
-                    return redirect('/')
+                    return redirect(request.GET.get('next', '/'))
                 else:
                     error_messages = "Cuenta de usuario inactiva"
 
