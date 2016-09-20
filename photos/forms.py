@@ -6,4 +6,5 @@ class PhotoForm(ModelForm):
 
     class Meta:
         model = Photo
-        exclude = []
+        # fields = ['visibility', 'license'] seleccionamos el orden de los campos a mostrar.
+        exclude = ['owner']
