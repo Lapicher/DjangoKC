@@ -15,15 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from photos.views import home, photo_detail, photo_creation
-from users.views import login, logout
+from photos.views import HomeView, PhotoDetailView, PhotoCreationView
+from users.views import LoginView, LogoutView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^login$', login),
-    url(r'^logout$', logout),
-    url(r'^photos/(?P<pk>[0-9]+)$', photo_detail),  # el mas es que el los numeros se pueden repetir una o mas veces.
+    url(r'^login$', LoginView.as_view()),
+    url(r'^logout$', LogoutView.as_view()),
+    url(r'^photos/(?P<pk>[0-9]+)$', PhotoDetailView.as_view()),  # el mas es que el los numeros se pueden repetir una o mas veces.
     # entre parentesis se pone la variable a capturar, y entre menor y mayor que va el nombre del parametro.
-    url(r'^create$', photo_creation),
-    url(r'^$', home)
+    url(r'^create$', PhotoCreationView.as_view()),
+    url(r'^$', HomeView.as_view())
 ]
