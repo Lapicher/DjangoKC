@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
+from users.forms import LoginForm
+
 
 def login(request):
     """
@@ -12,6 +14,7 @@ def login(request):
     """
 
     error_messages = ""
+    login_form = LoginForm()
     if request.method == "POST":
         username= request.POST.get('username')
         password= request.POST.get('pwd')
@@ -26,8 +29,9 @@ def login(request):
             else:
                 error_messages = "Cuenta de usuario inactiva"
 
+    context = {'error': error_messages, 'form': login_form}
 
-    return render(request, 'users/login.html', {'error':error_messages})
+    return render(request, 'users/login.html', context)
 
 
 def logout(request):
