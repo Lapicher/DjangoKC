@@ -16,19 +16,20 @@ def login(request):
     error_messages = ""
     login_form = LoginForm(request.POST) if request.method == "POST" else LoginForm() # para que mantenga los datos en los campos.
     if request.method == "POST":
-        login_form = LoginForm(request.POST)
-        username= request.POST.get('username')
-        password= request.POST.get('pwd')
+        if login_form.is_valid(): # funcion donde django valida la entrada de los datos, aun no es sqlinjectiongit etc.
 
-        user = authenticate(username=username, password=password)
-        if user is None:
-            error_messages = "Usuario o contraseña incorrecto"
-        else:
-            if user.is_active:
-                django_login(request, user)
-                return redirect('/')
+            username = login_form.cleaned_data.get('username')
+            password = login_form.cleaned_data.get('pwd')
+
+            user = authenticate(username=username, password=password)
+            if user is None:
+                error_messages = "Usuario o contraseña incorrecto"
             else:
-                error_messages = "Cuenta de usuario inactiva"
+                if user.is_active:
+                    django_login(request, user)
+                    return redirect('/')
+                else:
+                    error_messages = "Cuenta de usuario inactiva"
 
     context = {'error': error_messages, 'form': login_form}
     return render(request, 'users/login.html', context)
