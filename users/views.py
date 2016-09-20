@@ -14,8 +14,9 @@ def login(request):
     """
 
     error_messages = ""
-    login_form = LoginForm()
+    login_form = LoginForm(request.POST) if request.method == "POST" else LoginForm() # para que mantenga los datos en los campos.
     if request.method == "POST":
+        login_form = LoginForm(request.POST)
         username= request.POST.get('username')
         password= request.POST.get('pwd')
 
@@ -30,7 +31,6 @@ def login(request):
                 error_messages = "Cuenta de usuario inactiva"
 
     context = {'error': error_messages, 'form': login_form}
-
     return render(request, 'users/login.html', context)
 
 
