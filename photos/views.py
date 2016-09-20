@@ -4,6 +4,8 @@ from django.shortcuts import render
 # Create your views here.
 
 from django.http import HttpResponse
+
+from photos.forms import PhotoForm
 from photos.models import Photo, VISIBILITY_PUBLIC
 from django.shortcuts import render
 
@@ -44,3 +46,23 @@ def photo_detail(request, pk):
     context = {'photo': photo}
 
     return render(request, 'photos/photo_detail.html', context)
+
+
+def photo_creation(request):
+    """
+    Presenta el formulario para crear una foto y en caso de que la peticion sea post, la valida y la crea en caso de que
+    sea valida.
+    :param request:
+    :return:
+    """
+
+    message = None
+    photo_form = PhotoForm(request.POST) if request.method == "POST" else PhotoForm()
+    if request.method == "POST" and photo_form.is_valid():
+        new_photo = photo_form.save()
+        photo_form = PhotoForm() # limpia los campos para que se pueda crear una nueva foto.
+        message = "Foto creada satisfactoriamente <a href='/photos/{0}'> Ver foto </a>".format(new_photo.pk)
+
+    context = {'form': photo_form, 'message': message}
+    return render(request, 'photos/photo_creation.html', context)
+
