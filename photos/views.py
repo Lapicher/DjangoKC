@@ -5,6 +5,7 @@ from django.shortcuts import render
 # Create your views here.
 
 from django.http import HttpResponse
+from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView
 
@@ -85,7 +86,9 @@ class PhotoCreationView(View):
         if photo_form.is_valid():
             new_photo = photo_form.save()
             photo_form = PhotoForm()  # limpia los campos para que se pueda crear una nueva foto.
-            message = "Foto creada satisfactoriamente <a href='/photos/{0}'> Ver foto </a>".format(new_photo.pk)
+            message = "Foto creada satisfactoriamente <a href='{0}'> Ver foto </a>".format(
+                reverse('photos_detail', args=[new_photo.pk])
+            )
 
         context = {'form': photo_form, 'message': message}
         return render(request, 'photos/photo_creation.html', context)

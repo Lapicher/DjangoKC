@@ -20,11 +20,11 @@ from users.views import LoginView, LogoutView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^login$', LoginView.as_view()),
-    url(r'^logout$', LogoutView.as_view()),
-    url(r'^photos/(?P<pk>[0-9]+)$', PhotoDetailView.as_view()),  # el mas es que el los numeros se pueden repetir una o mas veces.
+    url(r'^login$', LoginView.as_view(), name='users_login'),
+    url(r'^logout$', LogoutView.as_view(), name='users_logout'),
+    url(r'^photos/(?P<pk>[0-9]+)$', PhotoDetailView.as_view(), name='photos_detail'),  # el mas es que el los numeros se pueden repetir una o mas veces.
     # entre parentesis se pone la variable a capturar, y entre menor y mayor que va el nombre del parametro.
-    url(r'^create$', PhotoCreationView.as_view()),
-    url(r'^photos/$', PhotoListView.as_view()),
-    url(r'^$', HomeView.as_view())
+    url(r'^create$', PhotoCreationView.as_view(), name='photos_create'),
+    url(r'^photos/$', PhotoListView.as_view(), name='photos_my_photos'),
+    url(r'^$', HomeView.as_view(), name='photos_home')
 ]
