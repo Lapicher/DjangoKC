@@ -94,6 +94,7 @@ class PhotoCreationView(View):
         return render(request, 'photos/photo_creation.html', context)
 
 
+
 # multiherencia con el validador de login, se puede usar tambien el decorador pero en este caso usamos la clase
 # LoginRequiredMixin
 
@@ -112,6 +113,7 @@ class PhotoListView(LoginRequiredMixin, ListView):
     # en vez de utilizar el query set de objecto.all que es el de defecto, consultar por usuario.
     def get_queryset(self):
         result = super().get_queryset().filter(owner=self.request.user)
+
         return result
 
 
