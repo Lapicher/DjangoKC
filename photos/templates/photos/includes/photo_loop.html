@@ -1,0 +1,9 @@
+ {% for photo in photo_list %}
+        <a href="/photos/{{ photo.pk }}">
+            <img src="{{ photo.url }}"  alt="{{ photo.name }}" title="{{ photo.name }}" height="300">
+        </a>
+        <p>
+            <strong>Autor:</strong>
+            {{ photo.owner.first_name }} {{photo.owner.last_name}}
+        </p>
+{% endfor %}

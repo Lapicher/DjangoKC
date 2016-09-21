@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from photos.views import HomeView, PhotoDetailView, PhotoCreationView
+from photos.views import HomeView, PhotoDetailView, PhotoCreationView, PhotoListView
 from users.views import LoginView, LogoutView
 
 urlpatterns = [
@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^photos/(?P<pk>[0-9]+)$', PhotoDetailView.as_view()),  # el mas es que el los numeros se pueden repetir una o mas veces.
     # entre parentesis se pone la variable a capturar, y entre menor y mayor que va el nombre del parametro.
     url(r'^create$', PhotoCreationView.as_view()),
+    url(r'^photos/$', PhotoListView.as_view()),
     url(r'^$', HomeView.as_view())
 ]

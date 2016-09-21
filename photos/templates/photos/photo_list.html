@@ -1,13 +1,12 @@
 {% extends "base.html" %}
 
 
-
 {% block body %}
-    <h1>Bienvenido a Frikr</h1>
+    <h1>Mis fotos</h1>
     <p>Como clifif</p>
 
-    {% if photo_list|length > 0 %}
-        {% include  "photos/includes/photo_loop.html" %}
+    {% if object_list|length > 0 %}
+        {% include "photos/includes/photo_loop.html" with photo_list=object_list %}
     {% else %}
         {% include "photos/includes/join_us.html" %}
     {% endif %}

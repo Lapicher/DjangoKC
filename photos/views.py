@@ -83,10 +83,20 @@ class PhotoCreationView(View):
 
         if photo_form.is_valid():
             new_photo = photo_form.save()
-            photo_form = PhotoForm() # limpia los campos para que se pueda crear una nueva foto.
+            photo_form = PhotoForm()  # limpia los campos para que se pueda crear una nueva foto.
             message = "Foto creada satisfactoriamente <a href='/photos/{0}'> Ver foto </a>".format(new_photo.pk)
 
         context = {'form': photo_form, 'message': message}
         return render(request, 'photos/photo_creation.html', context)
+
+
+class PhotoListView(ListView):
+    model = Photo
+    template_name = 'photos/photo_list.html'
+
+    def get(self, request):
+        result = super().get(request)
+        return result
+
 
 
