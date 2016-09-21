@@ -1,12 +1,26 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %} Frikr - Como fliker pero en friki{% endblock %}</title>
+    <link rel="stylesheet" href="{% static  'css/bootstrap.min.css' %}">
+    <script   src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
 </head>
 <body>
-    {% include "includes/menu.html" %}
-    {% block body %}{% endblock %}
-    &copy; Frikr. Todos los derechos reservados.
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sx-12">
+                {% include "includes/menu.html" %}
+                {% block body %}{% endblock %}
+                &copy; Frikr. Todos los derechos reservados.
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
 </html>
