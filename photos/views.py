@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
 
@@ -90,12 +91,24 @@ class PhotoCreationView(View):
         return render(request, 'photos/photo_creation.html', context)
 
 
-class PhotoListView(ListView):
+# multiherencia con el validador de login, se puede usar tambien el decorador pero en este caso usamos la clase
+# LoginRequiredMixin
+
+
+class PhotoListView(LoginRequiredMixin, ListView):
     model = Photo
     template_name = 'photos/photo_list.html'
 
+    # tambien se puede usar la siguiente funcion para validar al usuario logueado
+    """
+    @method_decorator(login_required())
     def get(self, request):
-        result = super().get(request)
+        return super().get(request)
+    """
+
+    # en vez de utilizar el query set de objecto.all que es el de defecto, consultar por usuario.
+    def get_queryset(self):
+        result = super().get_queryset().filter(owner=self.request.user)
         return result
 
 
