@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
 
@@ -44,6 +45,12 @@ class PhotoDetailView(View):
         """
 
         possible_photos = Photo.objects.filter(pk=pk).select_related("owner") #inner join para evitar hacer muchas peticiones
+        if not request.user.is_authenticated():
+            possible_photos = possible_photos.filter(visibility=VISIBILITY_PUBLIC)
+
+        else:
+            # query mas avanzada es como decir en sql: visibility='public' or owner='usuario'
+            possible_photos = possible_photos.filter(Q(visibility=VISIBILITY_PUBLIC) | Q(owner=request.user))
         if len(possible_photos) == 0:
                 return HttpResponseNotFound("La imagen que buscas no existe")
         elif len(possible_photos) > 1:
