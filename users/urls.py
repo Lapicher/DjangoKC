@@ -1,7 +1,12 @@
 from django.conf.urls import url
+from users.api import UserListAPI
 from users.views import LoginView, LogoutView
 
 urlpatterns = [
+    # URLS Web
     url(r'^login$', LoginView.as_view(), name='users_login'),
     url(r'^logout$', LogoutView.as_view(), name='users_logout'),
+
+    # URLS API
+    url(r'^api/1.0/users/', UserListAPI.as_view(), name='api_user_list')
 ]
