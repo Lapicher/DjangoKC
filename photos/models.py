@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-
+from photos.validators import badwords
 
 LICENCSE_COPYRIGHT = "RIG"
 LICENSE_COPYLEFT = "LEF"
@@ -30,7 +30,7 @@ class Photo(models.Model):
     name = models.CharField(max_length=150)
     url = models.URLField()
     # file = models.FileField(upload_to="uploads"), # para subir fotos al servidor, si hay repetidos django se encarga, hermoso.
-    description = models.TextField(null=True, blank=True) # null= true, indica que el campo es opcional, blank puede ser vacio.
+    description = models.TextField(null=True, blank=True, validators=[badwords]) # null= true, indica que el campo es opcional, blank puede ser vacio.
     license = models.CharField(max_length=3, choices=LICENSES, default=LICENSE_CC)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
