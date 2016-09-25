@@ -16,8 +16,7 @@ class UserPermissions(BasePermission):
         if request.user.is_superuser:
             return True
 
-        from users.api import UserDetailAPI
-        if isinstance(view, UserDetailAPI):
+        if view.action in ("retrieve", "update", "destroy", ):
             return True
         return False
 

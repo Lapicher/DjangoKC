@@ -1,8 +1,11 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
+from rest_framework.routers import DefaultRouter
 
-from photos.api import PhotoListAPI, PhotoDetailAPI
+from photos.api import PhotoViewSet
 from photos.views import HomeView, PhotoDetailView, PhotoCreationView, PhotoListView
 
+router = DefaultRouter()
+router.register('api/1.0/photos', PhotoViewSet, 'api_photos_')
 
 urlpatterns = [
      # el mas es que el los numeros se pueden repetir una o mas veces.
@@ -15,6 +18,5 @@ urlpatterns = [
 
 
     # URLS APis
-    url(r'^api/1.0/photos/$', PhotoListAPI.as_view(), name='api_photos_list'),
-    url(r'^api/1.0/photos/(?P<pk>[0-9]+)$', PhotoDetailAPI.as_view(), name='api_photos_detail')
+    url(r'', include(router.urls)),
 ]
