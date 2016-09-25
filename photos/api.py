@@ -22,6 +22,10 @@ class PhotoListAPI(ListCreateAPIView):
     def get_serializer_class(self):
         return PhotoSerializer if self.request.method == 'POST' else PhotoListSerializer
 
+    # metodo que nos sirve para crear la foto con el propietario que se logueo en la API.
+    def perform_create(self, serializer):
+        return serializer.save(owner=self.request.user)
+
 
 class PhotoDetailAPI(RetrieveUpdateDestroyAPIView):
     """
@@ -32,3 +36,7 @@ class PhotoDetailAPI(RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return PhotoQueryset.get_photos_by_user(self.request.user)
+
+    # metodo para que al modificar solo se modifique la foto propietaria del usuario autentificado.
+    def perform_update(self, serializer):
+        return serializer.save(owner=self.request.user)
