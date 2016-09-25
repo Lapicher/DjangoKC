@@ -36,6 +36,20 @@ class HomeView(View):
         context = {'photo_list': photos[:4]}
         return render(request, 'photos/home.html', context)
 
+
+class PhotoQueryset(object):
+
+    @staticmethod
+    def get_photos_by_user(user):
+        possible_photos = Photo.objects.all().select_related("owner")  # inner join para evitar hacer muchas peticiones
+        if not user.is_authenticated():
+            possible_photos = possible_photos.filter(visibility=VISIBILITY_PUBLIC)
+        else:
+            # query mas avanzada es como decir en sql: visibility='public' or owner='usuario'
+            possible_photos = possible_photos.filter(Q(visibility=VISIBILITY_PUBLIC) | Q(owner=user))
+        return possible_photos
+
+
 class PhotoDetailView(View):
     def get(self, request, pk):
         """
@@ -44,13 +58,7 @@ class PhotoDetailView(View):
         :return:
         """
 
-        possible_photos = Photo.objects.filter(pk=pk).select_related("owner") #inner join para evitar hacer muchas peticiones
-        if not request.user.is_authenticated():
-            possible_photos = possible_photos.filter(visibility=VISIBILITY_PUBLIC)
-
-        else:
-            # query mas avanzada es como decir en sql: visibility='public' or owner='usuario'
-            possible_photos = possible_photos.filter(Q(visibility=VISIBILITY_PUBLIC) | Q(owner=request.user))
+        possible_photos = PhotoQueryset.get_photos_by_user(request.user).filter(pk=pk)
         if len(possible_photos) == 0:
                 return HttpResponseNotFound("La imagen que buscas no existe")
         elif len(possible_photos) > 1:
@@ -58,7 +66,6 @@ class PhotoDetailView(View):
 
         photo = possible_photos[0] if len(possible_photos) > 0 else None
         context = {'photo': photo}
-
         return render(request, 'photos/photo_detail.html', context)
 
 
