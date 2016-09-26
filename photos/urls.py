@@ -19,4 +19,5 @@ urlpatterns = [
 
     # URLS APis
     url(r'', include(router.urls)),
+
 ]

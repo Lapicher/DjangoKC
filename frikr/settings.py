@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'users',
     'frikr',
     'rest_framework',
+    'files',
 
 ]
 
